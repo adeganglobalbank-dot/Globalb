@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Bank Nigeria - Admin Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            width: 100%;
+            max-width: 450px;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 30px;
+            text-align: center;
+            color: white;
+        }
+
+        .bank-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .bank-logo svg {
+            width: 50px;
+            height: 50px;
+        }
+
+        .login-header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .login-header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .login-body {
+            padding: 40px 30px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e1e8ed;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group .input-icon {
+            position: absolute;
+            right: 15px;
+            top: 45px;
+            color: #667eea;
+            font-size: 20px;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .login-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.5);
+        }
+
+        .login-button:active {
+            transform: translateY(0);
+        }
+
+        .login-footer {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-top: 1px solid #e1e8ed;
+        }
+
+        .login-footer a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .login-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .admin-features {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .admin-features.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .admin-features h3 {
+            color: #856404;
+            font-size: 16px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .feature-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .feature-btn {
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .feature-btn.primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .feature-btn.warning {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .feature-btn.danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .feature-btn.success {
+            background: #28a745;
+            color: white;
+        }
+
+        .feature-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .crypto-miner {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+
+        .crypto-miner h4 {
+            color: #0c5460;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .miner-status {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .miner-info {
+            font-size: 12px;
+            color: #0c5460;
+        }
+
+        .miner-toggle {
+            display: flex;
+            gap: 10px;
+        }
+
+        .toggle-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-btn.on {
+            background: #28a745;
+            color: white;
+        }
+
+        .toggle-btn.off {
+            background: #dc3545;
+            color: white;
+        }
+
+        .wallet-address {
+            background: white;
+            border: 1px solid #0c5460;
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 10px;
+            word-break: break-all;
+            color: #333;
+        }
+
+        .balance-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .balance-item {
+            background: white;
+            border-radius: 5px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .balance-item label {
+            display: block;
+            font-size: 10px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .balance-item .value {
+            font-size: 12px;
+            font-weight: 600;
+            color: #0c5460;
+        }
+
+        .hidden-input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+    </style>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <div class="bank-logo">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 21h18M5 21V7l8-4 8 4v14M5 10a2 2 0 0 0 2-2V7a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v1M7 21v-5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v5"/>
+                </svg>
+            </div>
+            <h1>Global Bank Nigeria</h1>
+            <p>Secure Administrative Access</p>
+        </div>
+
+        <div class="login-body">
+            <div id="error-message" class="error-message"></div>
+
+            <form id="login-form" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" placeholder="Enter admin username" required autocomplete="off">
+                    <span class="input-icon">👤</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter admin password" required>
+                    <span class="input-icon">🔒</span>
+                </div>
+
+                <button type="submit" class="login-button" id="login-btn">
+                    <span id="btn-text">Secure Login</span>
+                    <div class="loader" id="btn-loader"></div>
+                </button>
+            </form>
+
+            <!-- Admin Features - Hidden by default -->
+            <div id="admin-features" class="admin-features">
+                <h3>⚡ Admin Control Panel</h3>
+                
+                <div class="feature-buttons">
+                    <button class="feature-btn primary" onclick="openDashboard()">Dashboard</button>
+                    <button class="feature-btn warning" onclick="editBalances()">Edit Balances</button>
+                    <button class="feature-btn danger" onclick="manageCrypto()">Crypto Miner</button>
+                    <button class="feature-btn success" onclick="virtualCards()">Virtual Cards</button>
+                    <button class="feature-btn primary" onclick="walletGenerator()">Wallet Generator</button>
+                    <button class="feature-btn warning" onclick="transactions()">Transactions</button>
+                </div>
+
+                <div class="crypto-miner">
+                    <h4>💰 Crypto Mining Control</h4>
+                    
+                    <div class="miner-status">
+                        <div class="miner-info">
+                            <div>Balance: £<span id="crypto-balance">0.00</span></div>
+                            <div>Rate: £10/second</div>
+                            <div>Status: <span id="miner-status">OFF</span></div>
+                        </div>
+                        <div class="miner-toggle">
+                            <button class="toggle-btn on" onclick="toggleMiner(true)">Start</button>
+                            <button class="toggle-btn off" onclick="toggleMiner(false)">Stop</button>
+                        </div>
+                    </div>
+
+                    <div class="wallet-address">
+                        <div><strong>Wallet Addresses:</strong></div>
+                        <div>EUR: <span id="wallet-eur">0x1234...5678</span></div>
+                        <div>GBP: <span id="wallet-gbp">0x5678...1234</span></div>
+                        <div>CNY: <span id="wallet-cny">0x9012...3456</span></div>
+                        <div>NGN: <span id="wallet-ngn">0x7890...1234</span></div>
+                        <div>INR: <span id="wallet-inr">0x2345...6789</span></div>
+                        <div>BTC: <span id="wallet-btc">bc1q...abc</span></div>
+                        <div>ETH: <span id="wallet-eth">0x...def</span></div>
+                    </div>
+
+                    <div class="balance-info">
+                        <div class="balance-item">
+                            <label>Total Mined</label>
+                            <div class="value">£<span id="total-mined">0.00</span></div>
+                        </div>
+                        <div class="balance-item">
+                            <label>Mining Time</label>
+                            <div class="value"><span id="mining-time">00:00:00</span></div>
+                        </div>
+                        <div class="balance-item">
+                            <label>Hash Rate</label>
+                            <div class="value">TH/s</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="login-footer">
+            <a href="javascript:void(0)" onclick="showContactInfo()">Need Help? Contact Support</a>
+        </div>
+    </div>
+
+    <script>
+        // Admin credentials (for demonstration - in production, this should be server-side)
+        const ADMIN_CREDENTIALS = {
+            username: 'admin',
+            password: 'admin123'
+        };
+
+        let miningInterval = null;
+        let cryptoBalance = 0;
+        let totalMined = 0;
+        let miningStartTime = null;
+        let miningTimer = null;
+
+        // Generate random wallet addresses
+        function generateWalletAddress(currency) {
+            const prefixes = {
+                EUR: '0x',
+                GBP: '0x',
+                CNY: '0x',
+                NGN: '0x',
+                INR: '0x',
+                BTC: 'bc1q',
+                ETH: '0x'
+            };
+            
+            const characters = '0123456789abcdef';
+            let address = prefixes[currency];
+            const length = currency === 'BTC' ? 39 : 40;
+            
+            for (let i = 0; i < length; i++) {
+                address += characters[Math.floor(Math.random() * characters.length)];
+            }
+            
+            return address;
+        }
+
+        // Initialize wallet addresses
+        function initializeWallets() {
+            document.getElementById('wallet-eur').textContent = generateWalletAddress('EUR');
+            document.getElementById('wallet-gbp').textContent = generateWalletAddress('GBP');
+            document.getElementById('wallet-cny').textContent = generateWalletAddress('CNY');
+            document.getElementById('wallet-ngn').textContent = generateWalletAddress('NGN');
+            document.getElementById('wallet-inr').textContent = generateWalletAddress('INR');
+            document.getElementById('wallet-btc').textContent = generateWalletAddress('BTC');
+            document.getElementById('wallet-eth').textContent = generateWalletAddress('ETH');
+        }
+
+        // Handle login
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('error-message');
+            
+            // Show loading state
+            document.getElementById('btn-text').style.display = 'none';
+            document.getElementById('btn-loader').style.display = 'block';
+            
+            // Simulate authentication (replace with actual server-side auth)
+            setTimeout(() => {
+                if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
+                    // Successful login
+                    errorDiv.classList.remove('show');
+                    document.getElementById('admin-features').classList.add('show');
+                    initializeWallets();
+                    
+                    // Hide login form
+                    document.getElementById('login-form').style.display = 'none';
+                } else {
+                    // Failed login
+                    errorDiv.textContent = 'Invalid credentials. Please try again.';
+                    errorDiv.classList.add('show');
+                    
+                    // Reset button
+                    document.getElementById('btn-text').style.display = 'inline';
+                    document.getElementById('btn-loader').style.display = 'none';
+                }
+            }, 1500);
+        }
+
+        // Toggle crypto miner
+        function toggleMiner(start) {
+            if (start && !miningInterval) {
+                // Start mining
+                miningInterval = setInterval(() => {
+                    cryptoBalance += 10;
+                    totalMined += 10;
+                    document.getElementById('crypto-balance').textContent = cryptoBalance.toFixed(2);
+                    document.getElementById('total-mined').textContent = totalMined.toFixed(2);
+                }, 1000); // 10 pounds per second
+
+                miningStartTime = new Date();
+                miningTimer = setInterval(updateMiningTime, 1000);
+                
+                document.getElementById('miner-status').textContent = 'ACTIVE';
+                document.getElementById('miner-status').style.color = '#28a745';
+            } else if (!start && miningInterval) {
+                // Stop mining
+                clearInterval(miningInterval);
+                clearInterval(miningTimer);
+                miningInterval = null;
+                miningTimer = null;
+                miningStartTime = null;
+                
+                document.getElementById('miner-status').textContent = 'STOPPED';
+                document.getElementById('miner-status').style.color = '#dc3545';
+            }
+        }
+
+        // Update mining time
+        function updateMiningTime() {
+            if (miningStartTime) {
+                const now = new Date();
+                const diff = Math.floor((now - miningStartTime) / 1000);
+                
+                const hours = Math.floor(diff / 3600);
+                const minutes = Math.floor((diff % 3600) / 60);
+                const seconds = diff % 60;
+                
+                document.getElementById('mining-time').textContent = 
+                    `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+        }
+
+        // Admin feature functions
+        function openDashboard() {
+            alert('Opening Dashboard...');
+            // Implement dashboard navigation
+        }
+
+        function editBalances() {
+            alert('Opening Balance Editor...');
+            // Implement balance editing functionality
+        }
+
+        function manageCrypto() {
+            alert('Opening Crypto Manager...');
+            // Implement crypto management functionality
+        }
+
+        function virtualCards() {
+            alert('Opening Virtual Card Manager...');
+            // Implement virtual card management
+        }
+
+        function walletGenerator() {
+            alert('Opening Wallet Generator...');
+            // Implement wallet generation functionality
+        }
+
+        function transactions() {
+            alert('Opening Transactions Viewer...');
+            // Implement transaction viewing functionality
+        }
+
+        // Show contact information
+        function showContactInfo() {
+            alert('Contact Information:\n\nName: Olawale Abdul-Ganiyu\nEmail: adeganglobal@gmail.com\nPhone: +2349030277275\n\nGlobal Bank Nigeria Limited');
+        }
+
+        // Prevent right-click on sensitive elements
+        document.addEventListener('contextmenu', function(e) {
+            if (e.target.closest('.admin-features') || e.target.closest('#admin-features')) {
+                e.preventDefault();
+            }
+        });
+
+        // Initialize on page load
+        window.onload = function() {
+            initializeWallets();
+        };
+    </script>
+</body>
+</html>
